@@ -1,23 +1,47 @@
-import logo from './logo.svg';
 import './App.css';
+import {useState, useEffect} from 'react';
+import {getIssue, statuses} from "./api/tasks";
+import TaskComponent from "./components/TaskComponent";
 
 function App() {
+  const [issue, setIssue] = useState(undefined);
+
+  useEffect(() => {
+    async function fetchIssue() {
+      const issueApiResponse = await getIssue();
+      setIssue(issueApiResponse);
+    }
+    fetchIssue();
+  },[]);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        {
+            issue ?
+                <div>
+                <span>
+                    <span className='issue-title'>
+                        {issue.title}
+                    </span>
+                    <span className='status'>
+                      <select defaultValue={issue.status} name='status' id='status' className='select-status'>
+                        {
+                          statuses.map((status) => {
+                            return (
+                                <option value={status}>{status}</option>
+                            )
+                          })
+                        }
+                      </select>
+                    </span>
+                </span>
+                <TaskComponent subtasks={issue.subtasks}/>
+                </div>
+                :
+                <span/>
+
+        }
+
+
     </div>
   );
 }

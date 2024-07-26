@@ -1,0 +1,19 @@
+.subtask-header-expandable {
+    color: blue;
+    cursor: pointer;
+}
+.subtask-header-expandable:hover {
+
+}
+
+.tooltip {
+    visibility: hidden;
+}
+
+.subtask-header-nonexpandable {
+    cursor: auto;
+}
+
+.subtasks {
+    padding-top: 20px;
+}
